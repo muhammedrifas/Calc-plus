@@ -1,13 +1,12 @@
 import '../models/calculator_module.dart';
 import '../models/calculator_category.dart';
+import '../../modules/basic_math_module.dart'; // Add this import
 
 class ModuleRegistry {
-  /// The master list of all available calculators.
   static final List<CalculatorModule> allModules = [
-    // TODO: We will register instances of CalculatorModule here (e.g., BasicMathModule(), EmiModule())
+    const BasicMathModule(), // Register the module here
   ];
 
-  /// Helper to render the categorized accordion list on the dashboard
   static Map<CalculatorCategory, List<CalculatorModule>> get groupedByCategory {
     final map = <CalculatorCategory, List<CalculatorModule>>{};
     for (var category in CalculatorCategory.values) {
@@ -16,7 +15,6 @@ class ModuleRegistry {
     return map;
   }
 
-  /// Helper for universal search filtering
   static List<CalculatorModule> search(String query) {
     if (query.isEmpty) return allModules;
     final lowerQuery = query.toLowerCase();
