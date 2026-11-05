@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'screens/dashboard_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:omni_calc/screens/dashboard_screen.dart';
+import 'package:omni_calc/core/providers/favorites_provider.dart';
 
-void main() {
-  runApp(const ProviderScope(child: OmniCalcApp()));
+void main() async {
+  // Ensure widget binding is initialized before calling native async code
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPrefsProvider.overrideWithValue(prefs),
+      ],
+      child: const OmniCalcApp(),
+    ),
+  );
 }
 
 class OmniCalcApp extends StatelessWidget {

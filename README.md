@@ -1,17 +1,24 @@
-# omni_calc
+# OmniCalc
 
-A new Flutter project.
+An ad-free, completely offline, all-in-one utility calculator built with Flutter. OmniCalc delivers a clutter-free, responsive experience with modular tools spanning everyday arithmetic, finance, health, and custom utility calculations.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- **100% Ad-Free & Offline:** Zero distractions, zero tracking, and no internet connection required.
+- **Modular Plugin Architecture:** Built around an isolated plugin engine that allows rapid integration and testing of independent calculator modules.
+- **Customizable Dashboard & Pinned Favorites:** Pin frequently used calculators to an instant-access gradient grid directly on the home screen.
+- **Universal Search:** Fast, real-time filtering across all categories and modules.
+- **Industry-Standard Basic Math Engine:**
+  - Real-time expression evaluation with PEMDAS/BODMAS compliance.
+  - Consumer-standard business percentage logic (`A + B%`).
+  - Intelligent context-aware single-button parenthesis balancing `( )`.
+  - Sign toggling (`+/-`), persistent equation history sheet, and backspace controls.
+  - Fully responsive, overflow-safe keypad built for edge-to-edge device navigation.
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠 Tech Stack
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Framework:** Flutter (Android)
+- **State Management:** Riverpod (`flutter_riverpod`)
+- **Persistence:** `shared_preferences`
+- **Parsing Engine:** `math_expressions`
+- **Charts & Visualizations:** `fl_chart`

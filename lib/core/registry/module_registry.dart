@@ -1,6 +1,6 @@
 import '../models/calculator_module.dart';
 import '../models/calculator_category.dart';
-import '../../modules/basic_math_module.dart'; // Add this import
+import 'package:omni_calc/modules/basic_math/basic_math_module.dart';
 
 class ModuleRegistry {
   static final List<CalculatorModule> allModules = [
