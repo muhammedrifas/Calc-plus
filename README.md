@@ -8,12 +8,6 @@ An ad-free, completely offline, all-in-one utility calculator built with Flutter
 - **Modular Plugin Architecture:** Built around an isolated plugin engine that allows rapid integration and testing of independent calculator modules.
 - **Customizable Dashboard & Pinned Favorites:** Pin frequently used calculators to an instant-access gradient grid directly on the home screen.
 - **Universal Search:** Fast, real-time filtering across all categories and modules.
-- **Industry-Standard Basic Math Engine:**
-  - Real-time expression evaluation with PEMDAS/BODMAS compliance.
-  - Consumer-standard business percentage logic (`A + B%`).
-  - Intelligent context-aware single-button parenthesis balancing `( )`.
-  - Sign toggling (`+/-`), persistent equation history sheet, and backspace controls.
-  - Fully responsive, overflow-safe keypad built for edge-to-edge device navigation.
 
 ## 🛠 Tech Stack
 
