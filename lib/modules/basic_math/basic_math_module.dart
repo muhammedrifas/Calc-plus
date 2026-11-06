@@ -14,7 +14,7 @@ class BasicMathModule extends CalculatorModule {
           description: 'Standard arithmetic and equations',
           icon: Icons.calculate,
           category: CalculatorCategory.everyday,
-          primaryColor: AppColors.tealAccent,
+          primaryColor: AppColors.teal,
         );
 
   @override
@@ -53,18 +53,18 @@ class BasicMathScreen extends ConsumerWidget {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                backgroundColor: theme.surfaceBg,
+                backgroundColor: theme.surface,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
                 builder: (context) {
                   if (state.history.isEmpty) {
-                    return const SizedBox(
+                    return SizedBox(
                       height: 180,
                       child: Center(
                         child: Text(
                           'No calculations yet',
-                          style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+                          style: TextStyle(color: theme.textMuted, fontSize: 16),
                         ),
                       ),
                     );
@@ -72,12 +72,12 @@ class BasicMathScreen extends ConsumerWidget {
                   return ListView.separated(
                     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     itemCount: state.history.length,
-                    separatorBuilder: (_, __) => const Divider(color: AppColors.slate600, height: 1),
+                    separatorBuilder: (_, __) => Divider(color: theme.divider, height: 1),
                     itemBuilder: (context, index) => ListTile(
                       title: Text(
                         state.history[index],
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
+                        style: TextStyle(
+                          color: theme.textPrimary,
                           fontSize: 17,
                           letterSpacing: 0.5,
                         ),
@@ -100,7 +100,6 @@ class BasicMathScreen extends ConsumerWidget {
         bottom: true,
         child: Column(
           children: [
-            // Expression & Live Evaluation Display
             Expanded(
               flex: 4,
               child: Container(
@@ -118,7 +117,7 @@ class BasicMathScreen extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: state.equation.length > 12 ? 34 : 46,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.textSecondary,
+                          color: theme.textSecondary,
                         ),
                       ),
                     ),
@@ -128,7 +127,7 @@ class BasicMathScreen extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
-                        color: theme.basicMathAccent,
+                        color: theme.primary,
                       ),
                       maxLines: 1,
                     ),
@@ -136,13 +135,12 @@ class BasicMathScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            // Keypad Shell
             Expanded(
               flex: 6,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(12, 16, 12, 8),
                 decoration: BoxDecoration(
-                  color: theme.surfaceBg,
+                  color: theme.keypadSurface,
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
                 ),
                 child: Column(
@@ -189,20 +187,20 @@ class _CalcButton extends StatelessWidget {
     Color textColor;
 
     if (text == '=') {
-      bgColor = theme.basicMathAccent;
+      bgColor = theme.primary;
       textColor = theme.scaffoldBg;
     } else if (isOperator) {
-      bgColor = AppColors.operatorBgTeal;
-      textColor = theme.basicMathAccent;
+      bgColor = theme.keypadOperator;
+      textColor = theme.primary;
     } else if (text == 'AC') {
-      bgColor = theme.buttonClearBg;
-      textColor = AppColors.redAccent;
+      bgColor = theme.keypadClear;
+      textColor = theme.error;
     } else if (isAction) {
-      bgColor = theme.buttonActionBg;
-      textColor = theme.basicMathAccent;
+      bgColor = theme.keypadAction;
+      textColor = theme.primary;
     } else {
-      bgColor = theme.buttonDefaultBg;
-      textColor = AppColors.textPrimary;
+      bgColor = theme.keypadDefault;
+      textColor = theme.textPrimary;
     }
 
     return Material(

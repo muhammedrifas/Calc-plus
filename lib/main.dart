@@ -34,7 +34,7 @@ class OmniCalcApp extends StatelessWidget {
           centerTitle: false,
         ),
         colorScheme: const ColorScheme.dark(
-          primary: AppColors.tealAccent,
+          primary: AppColors.teal,
           surface: AppColors.slate800,
         ),
         extensions: const <ThemeExtension<dynamic>>[

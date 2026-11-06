@@ -2,69 +2,121 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class OmniTheme extends ThemeExtension<OmniTheme> {
+  // Surfaces
   final Color scaffoldBg;
-  final Color surfaceBg;
+  final Color surface;
   final Color cardBg;
-  final Color buttonDefaultBg;
-  final Color buttonClearBg;
-  final Color buttonActionBg;
+  final Color divider;
 
-  // Module Accents
-  final Color basicMathAccent;
-  final Color scientificAccent;
-  final Color loanEmiAccent;
-  final Color investmentAccent; 
+  // Semantic Accents
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+  final Color error;
+
+  // Keypad & Controls
+  final Color keypadSurface;
+  final Color keypadDefault;
+  final Color keypadOperator;
+  final Color keypadAction;
+  final Color keypadClear;
+
+  // Charts & Comparisons
+  final Color chartPrimary;
+  final Color chartSecondary;
+  final Color chartTertiary;
+
+  // Text
+  final Color textPrimary;
+  final Color textSecondary;
+  final Color textMuted;
 
   const OmniTheme({
     required this.scaffoldBg,
-    required this.surfaceBg,
+    required this.surface,
     required this.cardBg,
-    required this.buttonDefaultBg,
-    required this.buttonClearBg,
-    required this.buttonActionBg,
-    required this.basicMathAccent,
-    required this.scientificAccent,
-    required this.loanEmiAccent,
-    required this.investmentAccent,
+    required this.divider,
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+    required this.error,
+    required this.keypadSurface,
+    required this.keypadDefault,
+    required this.keypadOperator,
+    required this.keypadAction,
+    required this.keypadClear,
+    required this.chartPrimary,
+    required this.chartSecondary,
+    required this.chartTertiary,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textMuted,
   });
 
   static const dark = OmniTheme(
-    scaffoldBg: AppColors.slate900,
-    surfaceBg: AppColors.slate800,
-    cardBg: AppColors.slate800,
-    buttonDefaultBg: AppColors.slate700,
-    buttonClearBg: AppColors.clearBgRed,
-    buttonActionBg: AppColors.actionBg,
-    basicMathAccent: AppColors.tealAccent,
-    scientificAccent: AppColors.purpleAccent,
-    loanEmiAccent: AppColors.amberAccent,
-    investmentAccent: AppColors.emeraldAccent,
+    scaffoldBg: AppColors.slate950,
+    surface: AppColors.slate900,
+    cardBg: AppColors.slate900,
+    divider: AppColors.slate700,
+    primary: AppColors.teal,
+    secondary: AppColors.cyan,
+    tertiary: AppColors.purple,
+    error: AppColors.rose,
+    keypadSurface: AppColors.slate900,
+    keypadDefault: AppColors.slate800,
+    keypadOperator: AppColors.operatorBg,
+    keypadAction: AppColors.actionBg,
+    keypadClear: AppColors.clearBg,
+    chartPrimary: AppColors.teal,
+    chartSecondary: AppColors.amber,
+    chartTertiary: AppColors.purple,
+    textPrimary: AppColors.textPrimary,
+    textSecondary: AppColors.textSecondary,
+    textMuted: AppColors.textMuted,
   );
 
   @override
   OmniTheme copyWith({
     Color? scaffoldBg,
-    Color? surfaceBg,
+    Color? surface,
     Color? cardBg,
-    Color? buttonDefaultBg,
-    Color? buttonClearBg,
-    Color? buttonActionBg,
-    Color? basicMathAccent,
-    Color? scientificAccent,
-    Color? loanEmiAccent,
-    Color? investmentAccent,
+    Color? divider,
+    Color? primary,
+    Color? secondary,
+    Color? tertiary,
+    Color? error,
+    Color? keypadSurface,
+    Color? keypadDefault,
+    Color? keypadOperator,
+    Color? keypadAction,
+    Color? keypadClear,
+    Color? chartPrimary,
+    Color? chartSecondary,
+    Color? chartTertiary,
+    Color? textPrimary,
+    Color? textSecondary,
+    Color? textMuted,
   }) {
     return OmniTheme(
       scaffoldBg: scaffoldBg ?? this.scaffoldBg,
-      surfaceBg: surfaceBg ?? this.surfaceBg,
+      surface: surface ?? this.surface,
       cardBg: cardBg ?? this.cardBg,
-      buttonDefaultBg: buttonDefaultBg ?? this.buttonDefaultBg,
-      buttonClearBg: buttonClearBg ?? this.buttonClearBg,
-      buttonActionBg: buttonActionBg ?? this.buttonActionBg,
-      basicMathAccent: basicMathAccent ?? this.basicMathAccent,
-      scientificAccent: scientificAccent ?? this.scientificAccent,
-      loanEmiAccent: loanEmiAccent ?? this.loanEmiAccent,
-      investmentAccent: investmentAccent ?? this.investmentAccent,
+      divider: divider ?? this.divider,
+      primary: primary ?? this.primary,
+      secondary: secondary ?? this.secondary,
+      tertiary: tertiary ?? this.tertiary,
+      error: error ?? this.error,
+      keypadSurface: keypadSurface ?? this.keypadSurface,
+      keypadDefault: keypadDefault ?? this.keypadDefault,
+      keypadOperator: keypadOperator ?? this.keypadOperator,
+      keypadAction: keypadAction ?? this.keypadAction,
+      keypadClear: keypadClear ?? this.keypadClear,
+      chartPrimary: chartPrimary ?? this.chartPrimary,
+      chartSecondary: chartSecondary ?? this.chartSecondary,
+      chartTertiary: chartTertiary ?? this.chartTertiary,
+      textPrimary: textPrimary ?? this.textPrimary,
+      textSecondary: textSecondary ?? this.textSecondary,
+      textMuted: textMuted ?? this.textMuted,
     );
   }
 
@@ -73,15 +125,24 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
     if (other is! OmniTheme) return this;
     return OmniTheme(
       scaffoldBg: Color.lerp(scaffoldBg, other.scaffoldBg, t)!,
-      surfaceBg: Color.lerp(surfaceBg, other.surfaceBg, t)!,
+      surface: Color.lerp(surface, other.surface, t)!,
       cardBg: Color.lerp(cardBg, other.cardBg, t)!,
-      buttonDefaultBg: Color.lerp(buttonDefaultBg, other.buttonDefaultBg, t)!,
-      buttonClearBg: Color.lerp(buttonClearBg, other.buttonClearBg, t)!,
-      buttonActionBg: Color.lerp(buttonActionBg, other.buttonActionBg, t)!,
-      basicMathAccent: Color.lerp(basicMathAccent, other.basicMathAccent, t)!,
-      scientificAccent: Color.lerp(scientificAccent, other.scientificAccent, t)!,
-      loanEmiAccent: Color.lerp(loanEmiAccent, other.loanEmiAccent, t)!,
-      investmentAccent: Color.lerp(investmentAccent, other.investmentAccent, t)!,
+      divider: Color.lerp(divider, other.divider, t)!,
+      primary: Color.lerp(primary, other.primary, t)!,
+      secondary: Color.lerp(secondary, other.secondary, t)!,
+      tertiary: Color.lerp(tertiary, other.tertiary, t)!,
+      error: Color.lerp(error, other.error, t)!,
+      keypadSurface: Color.lerp(keypadSurface, other.keypadSurface, t)!,
+      keypadDefault: Color.lerp(keypadDefault, other.keypadDefault, t)!,
+      keypadOperator: Color.lerp(keypadOperator, other.keypadOperator, t)!,
+      keypadAction: Color.lerp(keypadAction, other.keypadAction, t)!,
+      keypadClear: Color.lerp(keypadClear, other.keypadClear, t)!,
+      chartPrimary: Color.lerp(chartPrimary, other.chartPrimary, t)!,
+      chartSecondary: Color.lerp(chartSecondary, other.chartSecondary, t)!,
+      chartTertiary: Color.lerp(chartTertiary, other.chartTertiary, t)!,
+      textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
+      textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
+      textMuted: Color.lerp(textMuted, other.textMuted, t)!,
     );
   }
 }

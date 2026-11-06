@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // Backgrounds & Surfaces (Slate Palette)
-  static const Color slate900 = Color(0xFF0F172A); // App Background
-  static const Color slate800 = Color(0xFF1E293B); // Cards / Sheet / Keypad
-  static const Color slate700 = Color(0xFF334155); // Default Buttons / Borders
-  static const Color slate600 = Color(0xFF475569); // Dividers / Inactive Tracks
+  // Neutrals / Surfaces
+  static const Color slate950 = Color(0xFF0F172A); // Scaffold / Base
+  static const Color slate900 = Color(0xFF1E293B); // Cards / Sheets
+  static const Color slate800 = Color(0xFF334155); // Buttons / Elevation
+  static const Color slate700 = Color(0xFF475569); // Dividers / Inactive tracks
 
-  // Accents & Functional Colors
-  static const Color tealAccent = Colors.tealAccent;
-  static const Color purpleAccent = Colors.deepPurpleAccent;
-  static const Color amberAccent = Colors.amberAccent;
-  static const Color redAccent = Color(0xFFF87171);
-  static const Color emeraldAccent = Color(0xFF34D399);
+  // Accents & Highlights
+  static const Color teal = Color(0xFF2DD4BF);
+  static const Color cyan = Color(0xFF06B6D4);
+  static const Color purple = Color(0xFFA855F7);
+  static const Color amber = Color(0xFFFBBF24);
+  static const Color emerald = Color(0xFF34D399);
+  static const Color rose = Color(0xFFF43F5E);
 
-  // Keypad Containers & Tints
-  static const Color operatorBgTeal = Color(0xFF1F4444);
-  static const Color operatorBgPurple = Color(0xFF2E294E);
-  static const Color clearBgRed = Color(0xFF3F2128);
-  static const Color actionBg = Color(0xFF2B374A);
+  // Keypad Surface Tints
+  static const Color operatorBg = Color(0xFF1F3A44);
+  static const Color actionBg = Color(0xFF26354A);
+  static const Color clearBg = Color(0xFF3F2128);
 
-  // Text Colors
-  static const Color textPrimary = Colors.white;
-  static const Color textSecondary = Colors.white70;
-  static const Color textMuted = Colors.white54;
+  // Text
+  static const Color textPrimary = Color(0xFFF8FAFC);
+  static const Color textSecondary = Color(0xFFCBD5E1);
+  static const Color textMuted = Color(0xFF64748B);
 }

@@ -4,6 +4,7 @@ import 'package:omni_calc/modules/basic_math/basic_math_module.dart';
 import 'package:omni_calc/modules/scientific_math/scientific_math_module.dart';
 import 'package:omni_calc/modules/loan_emi/loan_emi_module.dart';
 import 'package:omni_calc/modules/investment_sip/investment_sip_module.dart';
+import 'package:omni_calc/modules/unit_converter/unit_converter_module.dart';
 
 class ModuleRegistry {
   static final List<CalculatorModule> allModules = [
@@ -11,6 +12,7 @@ class ModuleRegistry {
     const ScientificMathModule(),
     const LoanEmiModule(),
     const InvestmentSipModule(),
+    const UnitConverterModule(),
   ];
 
   static Map<CalculatorCategory, List<CalculatorModule>> get groupedByCategory {

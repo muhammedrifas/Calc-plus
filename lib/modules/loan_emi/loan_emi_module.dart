@@ -16,7 +16,7 @@ class LoanEmiModule extends CalculatorModule {
           description: 'Calculate EMI, flat vs reducing rates, and amortization',
           icon: Icons.account_balance,
           category: CalculatorCategory.finance,
-          primaryColor: AppColors.amberAccent,
+          primaryColor: AppColors.amber,
         );
 
   @override
@@ -54,10 +54,9 @@ class LoanEmiScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Interest Rate Type Segmented Toggle
               Container(
                 decoration: BoxDecoration(
-                  color: theme.surfaceBg,
+                  color: theme.surface,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.all(4),
@@ -81,8 +80,6 @@ class LoanEmiScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Inputs Card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -99,10 +96,10 @@ class LoanEmiScreen extends ConsumerWidget {
                       divisions: 1999,
                       isDecimal: false,
                       suffix: '',
-                      activeColor: theme.loanEmiAccent,
+                      activeColor: theme.chartSecondary,
                       onChanged: (val) => notifier.setPrincipal(val),
                     ),
-                    const Divider(color: AppColors.slate600, height: 24),
+                    Divider(color: theme.divider, height: 24),
                     _ValidatedSliderInput(
                       label: 'Annual Interest Rate',
                       currentValue: state.annualInterestRate,
@@ -111,10 +108,10 @@ class LoanEmiScreen extends ConsumerWidget {
                       divisions: 399,
                       isDecimal: true,
                       suffix: '%',
-                      activeColor: theme.basicMathAccent,
+                      activeColor: theme.chartPrimary,
                       onChanged: (val) => notifier.setInterestRate(val),
                     ),
-                    const Divider(color: AppColors.slate600, height: 24),
+                    Divider(color: theme.divider, height: 24),
                     _ValidatedSliderInput(
                       label: 'Tenure (Years)',
                       currentValue: state.tenureYears.toDouble(),
@@ -123,15 +120,13 @@ class LoanEmiScreen extends ConsumerWidget {
                       divisions: 39,
                       isDecimal: false,
                       suffix: ' Yrs',
-                      activeColor: theme.scientificAccent,
+                      activeColor: theme.tertiary,
                       onChanged: (val) => notifier.setTenure(val.toInt()),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Result Summary & Doughnut Chart Card
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -141,14 +136,13 @@ class LoanEmiScreen extends ConsumerWidget {
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.slate600.withOpacity(0.4)),
+                  border: Border.all(color: theme.divider.withOpacity(0.4)),
                 ),
                 child: Column(
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Doughnut Chart (Adjusted to 100x100 to prevent horizontal overflows)
                         SizedBox(
                           height: 100,
                           width: 100,
@@ -160,13 +154,13 @@ class LoanEmiScreen extends ConsumerWidget {
                               sections: [
                                 PieChartSectionData(
                                   value: state.principalRatio * 100,
-                                  color: theme.basicMathAccent,
+                                  color: theme.chartPrimary,
                                   title: '',
                                   radius: 18,
                                 ),
                                 PieChartSectionData(
                                   value: state.interestRatio * 100,
-                                  color: theme.loanEmiAccent,
+                                  color: theme.chartSecondary,
                                   title: '',
                                   radius: 18,
                                 ),
@@ -175,14 +169,13 @@ class LoanEmiScreen extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(width: 16),
-                        // Monthly EMI Output
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Monthly EMI',
-                                style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                                style: TextStyle(color: theme.textMuted, fontSize: 13),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -192,7 +185,7 @@ class LoanEmiScreen extends ConsumerWidget {
                                 child: Text(
                                   formatCurrency(state.monthlyEmi),
                                   style: TextStyle(
-                                    color: theme.loanEmiAccent,
+                                    color: theme.chartSecondary,
                                     fontSize: 26,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -200,19 +193,19 @@ class LoanEmiScreen extends ConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               _BreakdownRow(
-                                color: theme.basicMathAccent,
+                                color: theme.chartPrimary,
                                 label: 'Principal',
                                 amount: formatCurrency(state.principal),
                               ),
                               const SizedBox(height: 4),
                               _BreakdownRow(
-                                color: theme.loanEmiAccent,
+                                color: theme.chartSecondary,
                                 label: 'Total Interest',
                                 amount: formatCurrency(state.totalInterest),
                               ),
-                              const Divider(color: AppColors.slate600, height: 16),
+                              Divider(color: theme.divider, height: 16),
                               _BreakdownRow(
-                                color: AppColors.textSecondary,
+                                color: theme.textSecondary,
                                 label: 'Total Payable',
                                 amount: formatCurrency(state.totalPayment),
                                 isBold: true,
@@ -227,14 +220,14 @@ class LoanEmiScreen extends ConsumerWidget {
                       width: double.infinity,
                       child: OutlinedButton.icon(
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: theme.loanEmiAccent),
+                          side: BorderSide(color: theme.chartSecondary),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
-                        icon: Icon(Icons.table_chart_outlined, color: theme.loanEmiAccent),
+                        icon: Icon(Icons.table_chart_outlined, color: theme.chartSecondary),
                         label: Text(
                           'View Amortization Schedule',
-                          style: TextStyle(color: theme.loanEmiAccent),
+                          style: TextStyle(color: theme.chartSecondary),
                         ),
                         onPressed: () => _showAmortizationSheet(context, state),
                       ),
@@ -255,7 +248,7 @@ class LoanEmiScreen extends ConsumerWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: theme.surfaceBg,
+      backgroundColor: theme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -274,44 +267,44 @@ class LoanEmiScreen extends ConsumerWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: AppColors.slate600,
+                    color: theme.divider,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Amortization Schedule (Monthly)',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textPrimary),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Row(
-                    children: const [
-                      SizedBox(width: 40, child: Text('Mo', style: TextStyle(color: AppColors.textMuted, fontSize: 12))),
-                      Expanded(child: Text('Principal', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.right)),
-                      Expanded(child: Text('Interest', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.right)),
-                      Expanded(child: Text('Balance', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.right)),
+                    children: [
+                      SizedBox(width: 40, child: Text('Mo', style: TextStyle(color: theme.textMuted, fontSize: 12))),
+                      Expanded(child: Text('Principal', style: TextStyle(color: theme.textMuted, fontSize: 12), textAlign: TextAlign.right)),
+                      Expanded(child: Text('Interest', style: TextStyle(color: theme.textMuted, fontSize: 12), textAlign: TextAlign.right)),
+                      Expanded(child: Text('Balance', style: TextStyle(color: theme.textMuted, fontSize: 12), textAlign: TextAlign.right)),
                     ],
                   ),
                 ),
-                const Divider(color: AppColors.slate600, height: 1),
+                Divider(color: theme.divider, height: 1),
                 Expanded(
                   child: ListView.separated(
                     controller: scrollController,
                     itemCount: schedule.length,
-                    separatorBuilder: (_, __) => const Divider(color: AppColors.slate700, height: 1),
+                    separatorBuilder: (_, __) => Divider(color: theme.divider.withOpacity(0.4), height: 1),
                     itemBuilder: (context, index) {
                       final row = schedule[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         child: Row(
                           children: [
-                            SizedBox(width: 40, child: Text('${row.month}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 13))),
-                            Expanded(child: Text(formatCurrency(row.principalPaid), style: TextStyle(color: theme.basicMathAccent, fontSize: 13), textAlign: TextAlign.right)),
-                            Expanded(child: Text(formatCurrency(row.interestPaid), style: TextStyle(color: theme.loanEmiAccent, fontSize: 13), textAlign: TextAlign.right)),
-                            Expanded(child: Text(formatCurrency(row.remainingBalance), style: const TextStyle(color: AppColors.textPrimary, fontSize: 13), textAlign: TextAlign.right)),
+                            SizedBox(width: 40, child: Text('${row.month}', style: TextStyle(color: theme.textSecondary, fontSize: 13))),
+                            Expanded(child: Text(formatCurrency(row.principalPaid), style: TextStyle(color: theme.chartPrimary, fontSize: 13), textAlign: TextAlign.right)),
+                            Expanded(child: Text(formatCurrency(row.interestPaid), style: TextStyle(color: theme.chartSecondary, fontSize: 13), textAlign: TextAlign.right)),
+                            Expanded(child: Text(formatCurrency(row.remainingBalance), style: TextStyle(color: theme.textPrimary, fontSize: 13), textAlign: TextAlign.right)),
                           ],
                         ),
                       );
@@ -344,7 +337,7 @@ class _RateTypeButton extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? theme.loanEmiAccent : Colors.transparent,
+          color: isSelected ? theme.chartSecondary : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
@@ -353,7 +346,7 @@ class _RateTypeButton extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-              color: isSelected ? theme.scaffoldBg : AppColors.textSecondary,
+              color: isSelected ? theme.scaffoldBg : theme.textSecondary,
             ),
           ),
         ),
@@ -447,7 +440,7 @@ class _ValidatedSliderInputState extends State<_ValidatedSliderInput> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 14)),
+            Text(widget.label, style: TextStyle(color: theme.textSecondary, fontSize: 14)),
             Container(
               width: 130,
               height: 36,
@@ -506,7 +499,7 @@ class _ValidatedSliderInputState extends State<_ValidatedSliderInput> {
             activeTrackColor: widget.activeColor,
             thumbColor: widget.activeColor,
             overlayColor: widget.activeColor.withOpacity(0.2),
-            inactiveTrackColor: AppColors.slate600.withOpacity(0.3),
+            inactiveTrackColor: theme.divider.withOpacity(0.3),
             trackHeight: 4,
           ),
           child: Slider(
@@ -540,6 +533,8 @@ class _BreakdownRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.omniTheme;
+
     return Row(
       children: [
         Container(
@@ -552,7 +547,7 @@ class _BreakdownRow extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              color: isBold ? AppColors.textSecondary : AppColors.textMuted,
+              color: isBold ? theme.textSecondary : theme.textMuted,
               fontSize: isBold ? 13 : 12,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
             ),
@@ -568,7 +563,7 @@ class _BreakdownRow extends StatelessWidget {
             child: Text(
               amount,
               style: TextStyle(
-                color: AppColors.textPrimary,
+                color: theme.textPrimary,
                 fontSize: isBold ? 14 : 13,
                 fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
               ),

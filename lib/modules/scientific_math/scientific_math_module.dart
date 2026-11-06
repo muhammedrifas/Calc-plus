@@ -15,7 +15,7 @@ class ScientificMathModule extends CalculatorModule {
           description: 'Trigonometry, logarithms, roots, and powers',
           icon: Icons.science,
           category: CalculatorCategory.everyday,
-          primaryColor: AppColors.purpleAccent,
+          primaryColor: AppColors.purple,
         );
 
   @override
@@ -133,18 +133,18 @@ class ScientificMathScreen extends ConsumerWidget {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                backgroundColor: theme.surfaceBg,
+                backgroundColor: theme.surface,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
                 builder: (context) {
                   if (state.history.isEmpty) {
-                    return const SizedBox(
+                    return SizedBox(
                       height: 180,
                       child: Center(
                         child: Text(
                           'No calculations yet',
-                          style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+                          style: TextStyle(color: theme.textMuted, fontSize: 16),
                         ),
                       ),
                     );
@@ -152,12 +152,12 @@ class ScientificMathScreen extends ConsumerWidget {
                   return ListView.separated(
                     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     itemCount: state.history.length,
-                    separatorBuilder: (_, __) => const Divider(color: AppColors.slate600, height: 1),
+                    separatorBuilder: (_, __) => Divider(color: theme.divider, height: 1),
                     itemBuilder: (context, index) => ListTile(
                       title: Text(
                         state.history[index],
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
+                        style: TextStyle(
+                          color: theme.textPrimary,
                           fontSize: 17,
                           letterSpacing: 0.5,
                         ),
@@ -192,7 +192,7 @@ class ScientificMathScreen extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: state.displayEquation.length > 14 ? 28 : 38,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.textSecondary,
+                          color: theme.textSecondary,
                         ),
                       ),
                     ),
@@ -202,7 +202,7 @@ class ScientificMathScreen extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: theme.scientificAccent,
+                        color: theme.tertiary,
                       ),
                       maxLines: 1,
                     ),
@@ -215,7 +215,7 @@ class ScientificMathScreen extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(10, 12, 10, 8),
                 decoration: BoxDecoration(
-                  color: theme.surfaceBg,
+                  color: theme.keypadSurface,
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
                 ),
                 child: Column(
@@ -242,9 +242,9 @@ class ScientificMathScreen extends ConsumerWidget {
                         ),
                       );
                     }),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 4.0),
-                      child: Divider(color: AppColors.slate600, height: 1),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Divider(color: theme.divider, height: 1),
                     ),
                     ..._numpadMatrix.map((row) {
                       return Expanded(
@@ -295,29 +295,29 @@ class _SciKeyButton extends StatelessWidget {
 
     switch (keyDef.type) {
       case SciKeyType.equals:
-        bgColor = theme.scientificAccent;
+        bgColor = theme.tertiary;
         textColor = theme.scaffoldBg;
         break;
       case SciKeyType.operator:
-        bgColor = AppColors.operatorBgPurple;
-        textColor = theme.scientificAccent;
+        bgColor = theme.keypadOperator;
+        textColor = theme.tertiary;
         break;
       case SciKeyType.action:
         if (keyDef.action == SciKeyAction.clearAll) {
-          bgColor = theme.buttonClearBg;
-          textColor = AppColors.redAccent;
+          bgColor = theme.keypadClear;
+          textColor = theme.error;
         } else {
-          bgColor = isHighlighted ? theme.scientificAccent.withOpacity(0.3) : theme.surfaceBg;
-          textColor = isHighlighted ? theme.scientificAccent : AppColors.textSecondary;
+          bgColor = isHighlighted ? theme.tertiary.withOpacity(0.3) : theme.surface;
+          textColor = isHighlighted ? theme.tertiary : theme.textSecondary;
         }
         break;
       case SciKeyType.number:
-        bgColor = theme.buttonDefaultBg;
-        textColor = AppColors.textPrimary;
+        bgColor = theme.keypadDefault;
+        textColor = theme.textPrimary;
         break;
       case SciKeyType.function:
-        bgColor = theme.surfaceBg;
-        textColor = AppColors.textSecondary;
+        bgColor = theme.surface;
+        textColor = theme.textSecondary;
         break;
     }
 

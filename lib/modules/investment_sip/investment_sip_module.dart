@@ -16,7 +16,7 @@ class InvestmentSipModule extends CalculatorModule {
           description: 'Compound interest, expected returns, and inflation adjustments',
           icon: Icons.trending_up,
           category: CalculatorCategory.finance,
-          primaryColor: AppColors.emeraldAccent,
+          primaryColor: AppColors.emerald,
         );
 
   @override
@@ -56,10 +56,9 @@ class InvestmentSipScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // SIP vs Lump Sum Switcher
               Container(
                 decoration: BoxDecoration(
-                  color: theme.surfaceBg,
+                  color: theme.surface,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.all(4),
@@ -83,8 +82,6 @@ class InvestmentSipScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Inputs Card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -101,10 +98,10 @@ class InvestmentSipScreen extends ConsumerWidget {
                       divisions: isSip ? 999 : 1999,
                       isDecimal: false,
                       suffix: '',
-                      activeColor: theme.investmentAccent,
+                      activeColor: theme.primary,
                       onChanged: (val) => notifier.setInvestmentAmount(val),
                     ),
-                    const Divider(color: AppColors.slate600, height: 24),
+                    Divider(color: theme.divider, height: 24),
                     _ValidatedSliderInput(
                       label: 'Expected Return Rate (CAGR)',
                       currentValue: state.annualReturnRate,
@@ -113,10 +110,10 @@ class InvestmentSipScreen extends ConsumerWidget {
                       divisions: 290,
                       isDecimal: true,
                       suffix: '%',
-                      activeColor: theme.basicMathAccent,
+                      activeColor: theme.secondary,
                       onChanged: (val) => notifier.setAnnualReturnRate(val),
                     ),
-                    const Divider(color: AppColors.slate600, height: 24),
+                    Divider(color: theme.divider, height: 24),
                     _ValidatedSliderInput(
                       label: 'Time Horizon',
                       currentValue: state.tenureYears.toDouble(),
@@ -125,19 +122,17 @@ class InvestmentSipScreen extends ConsumerWidget {
                       divisions: 39,
                       isDecimal: false,
                       suffix: ' Yrs',
-                      activeColor: theme.scientificAccent,
+                      activeColor: theme.tertiary,
                       onChanged: (val) => notifier.setTenureYears(val.toInt()),
                     ),
-                    const Divider(color: AppColors.slate600, height: 24),
-
-                    // Inflation Adjustment Expansion
+                    Divider(color: theme.divider, height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Adjust for Inflation', style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
+                        Text('Adjust for Inflation', style: TextStyle(color: theme.textSecondary, fontSize: 14)),
                         Switch(
                           value: state.adjustForInflation,
-                          activeColor: theme.investmentAccent,
+                          activeColor: theme.primary,
                           onChanged: (val) => notifier.toggleInflationAdjustment(val),
                         ),
                       ],
@@ -152,7 +147,7 @@ class InvestmentSipScreen extends ConsumerWidget {
                         divisions: 140,
                         isDecimal: true,
                         suffix: '%',
-                        activeColor: theme.loanEmiAccent,
+                        activeColor: theme.chartSecondary,
                         onChanged: (val) => notifier.setInflationRate(val),
                       ),
                     ],
@@ -160,8 +155,6 @@ class InvestmentSipScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Summary & Doughnut Chart Card
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -171,14 +164,13 @@ class InvestmentSipScreen extends ConsumerWidget {
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.slate600.withOpacity(0.4)),
+                  border: Border.all(color: theme.divider.withOpacity(0.4)),
                 ),
                 child: Column(
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Doughnut Chart (Optimized size to prevent horizontal overflows)
                         SizedBox(
                           height: 100,
                           width: 100,
@@ -190,13 +182,13 @@ class InvestmentSipScreen extends ConsumerWidget {
                               sections: [
                                 PieChartSectionData(
                                   value: state.investedRatio * 100,
-                                  color: AppColors.slate700,
+                                  color: theme.keypadDefault,
                                   title: '',
                                   radius: 18,
                                 ),
                                 PieChartSectionData(
                                   value: state.gainRatio * 100,
-                                  color: theme.investmentAccent,
+                                  color: theme.primary,
                                   title: '',
                                   radius: 18,
                                 ),
@@ -205,14 +197,13 @@ class InvestmentSipScreen extends ConsumerWidget {
                           ),
                         ),
                         const SizedBox(width: 16),
-                        // Outputs
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 state.adjustForInflation ? 'Real Value (Post-Inflation)' : 'Expected Maturity Value',
-                                style: const TextStyle(color: AppColors.textMuted, fontSize: 13),
+                                style: TextStyle(color: theme.textMuted, fontSize: 13),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -224,7 +215,7 @@ class InvestmentSipScreen extends ConsumerWidget {
                                     state.adjustForInflation ? state.inflationAdjustedMaturity : state.maturityValue,
                                   ),
                                   style: TextStyle(
-                                    color: theme.investmentAccent,
+                                    color: theme.primary,
                                     fontSize: 26,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -234,20 +225,20 @@ class InvestmentSipScreen extends ConsumerWidget {
                                 const SizedBox(height: 2),
                                 Text(
                                   'Nominal: ${formatCurrency(state.maturityValue)}',
-                                  style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
+                                  style: TextStyle(color: theme.textMuted, fontSize: 11),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                               const SizedBox(height: 10),
                               _BreakdownRow(
-                                color: AppColors.slate700,
+                                color: theme.keypadDefault,
                                 label: 'Invested Amount',
                                 amount: formatCurrency(state.totalInvested),
                               ),
                               const SizedBox(height: 4),
                               _BreakdownRow(
-                                color: theme.investmentAccent,
+                                color: theme.primary,
                                 label: 'Est. Wealth Gain',
                                 amount: formatCurrency(state.estimatedGain),
                               ),
@@ -261,12 +252,12 @@ class InvestmentSipScreen extends ConsumerWidget {
                       width: double.infinity,
                       child: OutlinedButton.icon(
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: theme.investmentAccent),
+                          side: BorderSide(color: theme.primary),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
-                        icon: Icon(Icons.show_chart, color: theme.investmentAccent),
-                        label: Text('View Year-by-Year Growth', style: TextStyle(color: theme.investmentAccent)),
+                        icon: Icon(Icons.show_chart, color: theme.primary),
+                        label: Text('View Year-by-Year Growth', style: TextStyle(color: theme.primary)),
                         onPressed: () => _showGrowthSchedule(context, state),
                       ),
                     ),
@@ -286,7 +277,7 @@ class InvestmentSipScreen extends ConsumerWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: theme.surfaceBg,
+      backgroundColor: theme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -304,42 +295,42 @@ class InvestmentSipScreen extends ConsumerWidget {
                   margin: const EdgeInsets.symmetric(vertical: 12),
                   width: 40,
                   height: 4,
-                  decoration: BoxDecoration(color: AppColors.slate600, borderRadius: BorderRadius.circular(2)),
+                  decoration: BoxDecoration(color: theme.divider, borderRadius: BorderRadius.circular(2)),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
                     'Yearly Growth Schedule',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textPrimary),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Row(
-                    children: const [
-                      SizedBox(width: 40, child: Text('Yr', style: TextStyle(color: AppColors.textMuted, fontSize: 12))),
-                      Expanded(child: Text('Invested', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.right)),
-                      Expanded(child: Text('Nominal Value', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.right)),
-                      Expanded(child: Text('Real Value', style: TextStyle(color: AppColors.textMuted, fontSize: 12), textAlign: TextAlign.right)),
+                    children: [
+                      SizedBox(width: 40, child: Text('Yr', style: TextStyle(color: theme.textMuted, fontSize: 12))),
+                      Expanded(child: Text('Invested', style: TextStyle(color: theme.textMuted, fontSize: 12), textAlign: TextAlign.right)),
+                      Expanded(child: Text('Nominal Value', style: TextStyle(color: theme.textMuted, fontSize: 12), textAlign: TextAlign.right)),
+                      Expanded(child: Text('Real Value', style: TextStyle(color: theme.textMuted, fontSize: 12), textAlign: TextAlign.right)),
                     ],
                   ),
                 ),
-                const Divider(color: AppColors.slate600, height: 1),
+                Divider(color: theme.divider, height: 1),
                 Expanded(
                   child: ListView.separated(
                     controller: scrollController,
                     itemCount: schedule.length,
-                    separatorBuilder: (_, __) => const Divider(color: AppColors.slate700, height: 1),
+                    separatorBuilder: (_, __) => Divider(color: theme.divider.withOpacity(0.4), height: 1),
                     itemBuilder: (context, index) {
                       final row = schedule[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         child: Row(
                           children: [
-                            SizedBox(width: 40, child: Text('${row.year}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 13))),
-                            Expanded(child: Text(formatCurrency(row.investedAmount), style: const TextStyle(color: AppColors.textSecondary, fontSize: 13), textAlign: TextAlign.right)),
-                            Expanded(child: Text(formatCurrency(row.futureValue), style: TextStyle(color: theme.investmentAccent, fontSize: 13), textAlign: TextAlign.right)),
-                            Expanded(child: Text(formatCurrency(row.inflationAdjustedValue), style: TextStyle(color: theme.loanEmiAccent, fontSize: 13), textAlign: TextAlign.right)),
+                            SizedBox(width: 40, child: Text('${row.year}', style: TextStyle(color: theme.textSecondary, fontSize: 13))),
+                            Expanded(child: Text(formatCurrency(row.investedAmount), style: TextStyle(color: theme.textSecondary, fontSize: 13), textAlign: TextAlign.right)),
+                            Expanded(child: Text(formatCurrency(row.futureValue), style: TextStyle(color: theme.primary, fontSize: 13), textAlign: TextAlign.right)),
+                            Expanded(child: Text(formatCurrency(row.inflationAdjustedValue), style: TextStyle(color: theme.chartSecondary, fontSize: 13), textAlign: TextAlign.right)),
                           ],
                         ),
                       );
@@ -372,7 +363,7 @@ class _ModeButton extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? theme.investmentAccent : Colors.transparent,
+          color: isSelected ? theme.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
@@ -381,7 +372,7 @@ class _ModeButton extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-              color: isSelected ? theme.scaffoldBg : AppColors.textSecondary,
+              color: isSelected ? theme.scaffoldBg : theme.textSecondary,
             ),
           ),
         ),
@@ -475,7 +466,7 @@ class _ValidatedSliderInputState extends State<_ValidatedSliderInput> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 14)),
+            Text(widget.label, style: TextStyle(color: theme.textSecondary, fontSize: 14)),
             Container(
               width: 130,
               height: 36,
@@ -534,7 +525,7 @@ class _ValidatedSliderInputState extends State<_ValidatedSliderInput> {
             activeTrackColor: widget.activeColor,
             thumbColor: widget.activeColor,
             overlayColor: widget.activeColor.withOpacity(0.2),
-            inactiveTrackColor: AppColors.slate600.withOpacity(0.3),
+            inactiveTrackColor: theme.divider.withOpacity(0.3),
             trackHeight: 4,
           ),
           child: Slider(
@@ -566,6 +557,8 @@ class _BreakdownRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.omniTheme;
+
     return Row(
       children: [
         Container(
@@ -577,7 +570,7 @@ class _BreakdownRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
+            style: TextStyle(color: theme.textMuted, fontSize: 12),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -589,8 +582,8 @@ class _BreakdownRow extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Text(
               amount,
-              style: const TextStyle(
-                color: AppColors.textPrimary,
+              style: TextStyle(
+                color: theme.textPrimary,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
