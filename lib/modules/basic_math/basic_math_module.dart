@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:omni_calc/core/models/calculator_module.dart';
 import 'package:omni_calc/core/models/calculator_category.dart';
+import 'package:omni_calc/core/theme/app_colors.dart';
+import 'package:omni_calc/core/theme/app_theme_extension.dart';
 import 'package:omni_calc/modules/basic_math/basic_math_provider.dart';
 
 class BasicMathModule extends CalculatorModule {
@@ -12,7 +14,7 @@ class BasicMathModule extends CalculatorModule {
           description: 'Standard arithmetic and equations',
           icon: Icons.calculate,
           category: CalculatorCategory.everyday,
-          primaryColor: Colors.tealAccent,
+          primaryColor: AppColors.tealAccent,
         );
 
   @override
@@ -28,6 +30,7 @@ class BasicMathScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(basicMathProvider);
     final notifier = ref.read(basicMathProvider.notifier);
+    final theme = context.omniTheme;
 
     final buttonMatrix = [
       ['AC', '( )', '%', '÷'],
@@ -38,7 +41,7 @@ class BasicMathScreen extends ConsumerWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: theme.scaffoldBg,
       appBar: AppBar(
         title: const Text('Basic Math', style: TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
@@ -50,7 +53,7 @@ class BasicMathScreen extends ConsumerWidget {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                backgroundColor: const Color(0xFF1E293B),
+                backgroundColor: theme.surfaceBg,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
@@ -59,18 +62,25 @@ class BasicMathScreen extends ConsumerWidget {
                     return const SizedBox(
                       height: 180,
                       child: Center(
-                        child: Text('No calculations yet', style: TextStyle(color: Colors.white54, fontSize: 16)),
+                        child: Text(
+                          'No calculations yet',
+                          style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+                        ),
                       ),
                     );
                   }
                   return ListView.separated(
                     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     itemCount: state.history.length,
-                    separatorBuilder: (_, __) => const Divider(color: Colors.white10),
+                    separatorBuilder: (_, __) => const Divider(color: AppColors.slate600, height: 1),
                     itemBuilder: (context, index) => ListTile(
                       title: Text(
                         state.history[index],
-                        style: const TextStyle(color: Colors.white, fontSize: 17, letterSpacing: 0.5),
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 17,
+                          letterSpacing: 0.5,
+                        ),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -108,17 +118,17 @@ class BasicMathScreen extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: state.equation.length > 12 ? 34 : 46,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white70,
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ),
                     const SizedBox(height: 12),
                     Text(
                       state.result.isEmpty ? ' ' : state.result,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
-                        color: Colors.tealAccent,
+                        color: theme.basicMathAccent,
                       ),
                       maxLines: 1,
                     ),
@@ -131,9 +141,9 @@ class BasicMathScreen extends ConsumerWidget {
               flex: 6,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(12, 16, 12, 8),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF1E293B),
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+                decoration: BoxDecoration(
+                  color: theme.surfaceBg,
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
                 ),
                 child: Column(
                   children: buttonMatrix.map((row) {
@@ -174,24 +184,25 @@ class _CalcButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.omniTheme;
     Color bgColor;
     Color textColor;
 
     if (text == '=') {
-      bgColor = Colors.tealAccent.shade400;
-      textColor = const Color(0xFF0F172A);
+      bgColor = theme.basicMathAccent;
+      textColor = theme.scaffoldBg;
     } else if (isOperator) {
-      bgColor = const Color(0xFF1F4444);
-      textColor = Colors.tealAccent;
+      bgColor = AppColors.operatorBgTeal;
+      textColor = theme.basicMathAccent;
     } else if (text == 'AC') {
-      bgColor = const Color(0xFF3F2128);
-      textColor = Colors.redAccent.shade100;
+      bgColor = theme.buttonClearBg;
+      textColor = AppColors.redAccent;
     } else if (isAction) {
-      bgColor = const Color(0xFF2B374A);
-      textColor = Colors.tealAccent;
+      bgColor = theme.buttonActionBg;
+      textColor = theme.basicMathAccent;
     } else {
-      bgColor = const Color(0xFF334155);
-      textColor = Colors.white;
+      bgColor = theme.buttonDefaultBg;
+      textColor = AppColors.textPrimary;
     }
 
     return Material(

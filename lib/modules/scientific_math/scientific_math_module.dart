@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:omni_calc/core/models/calculator_module.dart';
 import 'package:omni_calc/core/models/calculator_category.dart';
+import 'package:omni_calc/core/theme/app_colors.dart';
+import 'package:omni_calc/core/theme/app_theme_extension.dart';
 import 'package:omni_calc/modules/scientific_math/scientific_key_action.dart';
 import 'package:omni_calc/modules/scientific_math/scientific_math_provider.dart';
 
@@ -13,7 +15,7 @@ class ScientificMathModule extends CalculatorModule {
           description: 'Trigonometry, logarithms, roots, and powers',
           icon: Icons.science,
           category: CalculatorCategory.everyday,
-          primaryColor: Colors.deepPurpleAccent,
+          primaryColor: AppColors.purpleAccent,
         );
 
   @override
@@ -116,9 +118,10 @@ class ScientificMathScreen extends ConsumerWidget {
     final state = ref.watch(scientificMathProvider);
     final notifier = ref.read(scientificMathProvider.notifier);
     final sciRows = _buildSciRows(state);
+    final theme = context.omniTheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: theme.scaffoldBg,
       appBar: AppBar(
         title: const Text('Scientific Math', style: TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
@@ -130,7 +133,7 @@ class ScientificMathScreen extends ConsumerWidget {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                backgroundColor: const Color(0xFF1E293B),
+                backgroundColor: theme.surfaceBg,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
@@ -139,18 +142,25 @@ class ScientificMathScreen extends ConsumerWidget {
                     return const SizedBox(
                       height: 180,
                       child: Center(
-                        child: Text('No calculations yet', style: TextStyle(color: Colors.white54, fontSize: 16)),
+                        child: Text(
+                          'No calculations yet',
+                          style: TextStyle(color: AppColors.textMuted, fontSize: 16),
+                        ),
                       ),
                     );
                   }
                   return ListView.separated(
                     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     itemCount: state.history.length,
-                    separatorBuilder: (_, __) => const Divider(color: Colors.white10),
+                    separatorBuilder: (_, __) => const Divider(color: AppColors.slate600, height: 1),
                     itemBuilder: (context, index) => ListTile(
                       title: Text(
                         state.history[index],
-                        style: const TextStyle(color: Colors.white, fontSize: 17, letterSpacing: 0.5),
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 17,
+                          letterSpacing: 0.5,
+                        ),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -182,17 +192,17 @@ class ScientificMathScreen extends ConsumerWidget {
                         style: TextStyle(
                           fontSize: state.displayEquation.length > 14 ? 28 : 38,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white70,
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       state.result.isEmpty ? ' ' : state.result,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.deepPurpleAccent,
+                        color: theme.scientificAccent,
                       ),
                       maxLines: 1,
                     ),
@@ -204,9 +214,9 @@ class ScientificMathScreen extends ConsumerWidget {
               flex: 7,
               child: Container(
                 padding: const EdgeInsets.fromLTRB(10, 12, 10, 8),
-                decoration: const BoxDecoration(
-                  color: Color(0xFF1E293B),
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+                decoration: BoxDecoration(
+                  color: theme.surfaceBg,
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
                 ),
                 child: Column(
                   children: [
@@ -234,7 +244,7 @@ class ScientificMathScreen extends ConsumerWidget {
                     }),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
-                      child: Divider(color: Colors.white12, height: 1),
+                      child: Divider(color: AppColors.slate600, height: 1),
                     ),
                     ..._numpadMatrix.map((row) {
                       return Expanded(
@@ -279,34 +289,35 @@ class _SciKeyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.omniTheme;
     Color bgColor;
     Color textColor;
 
     switch (keyDef.type) {
       case SciKeyType.equals:
-        bgColor = Colors.deepPurpleAccent;
-        textColor = Colors.white;
+        bgColor = theme.scientificAccent;
+        textColor = theme.scaffoldBg;
         break;
       case SciKeyType.operator:
-        bgColor = const Color(0xFF2E294E);
-        textColor = Colors.deepPurpleAccent.shade100;
+        bgColor = AppColors.operatorBgPurple;
+        textColor = theme.scientificAccent;
         break;
       case SciKeyType.action:
         if (keyDef.action == SciKeyAction.clearAll) {
-          bgColor = const Color(0xFF3F2128);
-          textColor = Colors.redAccent.shade100;
+          bgColor = theme.buttonClearBg;
+          textColor = AppColors.redAccent;
         } else {
-          bgColor = isHighlighted ? Colors.deepPurpleAccent.withOpacity(0.3) : const Color(0xFF1E293B);
-          textColor = isHighlighted ? Colors.deepPurpleAccent : Colors.white70;
+          bgColor = isHighlighted ? theme.scientificAccent.withOpacity(0.3) : theme.surfaceBg;
+          textColor = isHighlighted ? theme.scientificAccent : AppColors.textSecondary;
         }
         break;
       case SciKeyType.number:
-        bgColor = const Color(0xFF334155);
-        textColor = Colors.white;
+        bgColor = theme.buttonDefaultBg;
+        textColor = AppColors.textPrimary;
         break;
       case SciKeyType.function:
-        bgColor = const Color(0xFF1E293B);
-        textColor = Colors.white70;
+        bgColor = theme.surfaceBg;
+        textColor = AppColors.textSecondary;
         break;
     }
 
