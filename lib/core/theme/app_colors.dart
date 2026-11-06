@@ -14,6 +14,7 @@ class AppColors {
   static const Color purpleAccent = Colors.deepPurpleAccent;
   static const Color amberAccent = Colors.amberAccent;
   static const Color redAccent = Color(0xFFF87171);
+  static const Color emeraldAccent = Color(0xFF34D399);
 
   // Keypad Containers & Tints
   static const Color operatorBgTeal = Color(0xFF1F4444);

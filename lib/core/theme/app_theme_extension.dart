@@ -13,6 +13,7 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
   final Color basicMathAccent;
   final Color scientificAccent;
   final Color loanEmiAccent;
+  final Color investmentAccent; 
 
   const OmniTheme({
     required this.scaffoldBg,
@@ -24,9 +25,9 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
     required this.basicMathAccent,
     required this.scientificAccent,
     required this.loanEmiAccent,
+    required this.investmentAccent,
   });
 
-  /// The default dark preset
   static const dark = OmniTheme(
     scaffoldBg: AppColors.slate900,
     surfaceBg: AppColors.slate800,
@@ -37,6 +38,7 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
     basicMathAccent: AppColors.tealAccent,
     scientificAccent: AppColors.purpleAccent,
     loanEmiAccent: AppColors.amberAccent,
+    investmentAccent: AppColors.emeraldAccent,
   );
 
   @override
@@ -50,6 +52,7 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
     Color? basicMathAccent,
     Color? scientificAccent,
     Color? loanEmiAccent,
+    Color? investmentAccent,
   }) {
     return OmniTheme(
       scaffoldBg: scaffoldBg ?? this.scaffoldBg,
@@ -61,6 +64,7 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
       basicMathAccent: basicMathAccent ?? this.basicMathAccent,
       scientificAccent: scientificAccent ?? this.scientificAccent,
       loanEmiAccent: loanEmiAccent ?? this.loanEmiAccent,
+      investmentAccent: investmentAccent ?? this.investmentAccent,
     );
   }
 
@@ -77,11 +81,11 @@ class OmniTheme extends ThemeExtension<OmniTheme> {
       basicMathAccent: Color.lerp(basicMathAccent, other.basicMathAccent, t)!,
       scientificAccent: Color.lerp(scientificAccent, other.scientificAccent, t)!,
       loanEmiAccent: Color.lerp(loanEmiAccent, other.loanEmiAccent, t)!,
+      investmentAccent: Color.lerp(investmentAccent, other.investmentAccent, t)!,
     );
   }
 }
 
-/// Convenience extension for cleaner call sites
 extension OmniThemeContext on BuildContext {
   OmniTheme get omniTheme => Theme.of(this).extension<OmniTheme>() ?? OmniTheme.dark;
 }

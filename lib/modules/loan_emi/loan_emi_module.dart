@@ -148,33 +148,33 @@ class LoanEmiScreen extends ConsumerWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Doughnut Chart
+                        // Doughnut Chart (Adjusted to 100x100 to prevent horizontal overflows)
                         SizedBox(
-                          height: 120,
-                          width: 120,
+                          height: 100,
+                          width: 100,
                           child: PieChart(
                             PieChartData(
                               sectionsSpace: 2,
-                              centerSpaceRadius: 36,
+                              centerSpaceRadius: 28,
                               startDegreeOffset: -90,
                               sections: [
                                 PieChartSectionData(
                                   value: state.principalRatio * 100,
                                   color: theme.basicMathAccent,
                                   title: '',
-                                  radius: 20,
+                                  radius: 18,
                                 ),
                                 PieChartSectionData(
                                   value: state.interestRatio * 100,
                                   color: theme.loanEmiAccent,
                                   title: '',
-                                  radius: 20,
+                                  radius: 18,
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 16),
                         // Monthly EMI Output
                         Expanded(
                           child: Column(
@@ -182,18 +182,23 @@ class LoanEmiScreen extends ConsumerWidget {
                             children: [
                               const Text(
                                 'Monthly EMI',
-                                style: TextStyle(color: AppColors.textMuted, fontSize: 14),
+                                style: TextStyle(color: AppColors.textMuted, fontSize: 13),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 4),
-                              Text(
-                                formatCurrency(state.monthlyEmi),
-                                style: TextStyle(
-                                  color: theme.loanEmiAccent,
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold,
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  formatCurrency(state.monthlyEmi),
+                                  style: TextStyle(
+                                    color: theme.loanEmiAccent,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 10),
                               _BreakdownRow(
                                 color: theme.basicMathAccent,
                                 label: 'Principal',
@@ -536,21 +541,38 @@ class _BreakdownRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
-            const SizedBox(width: 6),
-            Text(label, style: TextStyle(color: AppColors.textMuted, fontSize: isBold ? 13 : 12)),
-          ],
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        Text(
-          amount,
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: isBold ? 14 : 13,
-            fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: isBold ? AppColors.textSecondary : AppColors.textMuted,
+              fontSize: isBold ? 13 : 12,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerRight,
+            child: Text(
+              amount,
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: isBold ? 14 : 13,
+                fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+              ),
+            ),
           ),
         ),
       ],
