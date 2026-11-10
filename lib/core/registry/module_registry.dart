@@ -7,6 +7,9 @@ import 'package:omni_calc/modules/investment_sip/investment_sip_module.dart';
 import 'package:omni_calc/modules/unit_converter/unit_converter_module.dart';
 import 'package:omni_calc/modules/date_time_interval/date_time_interval_module.dart'; 
 import 'package:omni_calc/modules/fuel_cost/fuel_cost_module.dart';
+import 'package:omni_calc/modules/round_robin/round_robin_module.dart';
+import 'package:omni_calc/modules/bmi_ibw/bmi_ibw_module.dart';
+import 'package:omni_calc/modules/bmr_tdee/bmr_tdee_module.dart';
 
 class ModuleRegistry {
   static final List<CalculatorModule> allModules = [
@@ -17,6 +20,9 @@ class ModuleRegistry {
     const UnitConverterModule(),
     const DateTimeIntervalModule(),
     const FuelCostModule(),
+    const RoundRobinModule(),
+    const BmiIbwModule(),
+    const BmrTdeeModule(),
   ];
 
   static Map<CalculatorCategory, List<CalculatorModule>> get groupedByCategory {
