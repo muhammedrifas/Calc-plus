@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:omni_calc/core/registry/module_registry.dart';
 import 'package:omni_calc/core/providers/favorites_provider.dart';
 import 'package:omni_calc/core/theme/app_theme_extension.dart';
@@ -15,10 +16,25 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
+  // Update these with your deployed GitHub Pages URLs
+  static const String _privacyPolicyUrl = 'https://muhammedrifas.github.io/OmniCalc-privacy-and-feedback/';
+  static const String _feedbackUrl = 'https://muhammedrifas.github.io/OmniCalc-privacy-and-feedback/feedback.html';
+
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _launchExternalUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not open page in browser.')),
+        );
+      }
+    }
   }
 
   @override
@@ -37,9 +53,51 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return Scaffold(
       backgroundColor: theme.scaffoldBg,
       appBar: AppBar(
-        title: const Text('OmniCalc', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Calc+', style: TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: [
+          PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert_rounded, color: theme.textSecondary),
+            color: theme.surface,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            onSelected: (value) {
+              if (value == 'privacy') {
+                _launchExternalUrl(_privacyPolicyUrl);
+              } else if (value == 'feedback') {
+                _launchExternalUrl(_feedbackUrl);
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'feedback',
+                child: Row(
+                  children: [
+                    Icon(Icons.feedback_outlined, size: 18, color: theme.secondary),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Report Bugs & Feedback',
+                      style: TextStyle(color: theme.textPrimary, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'privacy',
+                child: Row(
+                  children: [
+                    Icon(Icons.privacy_tip_outlined, size: 18, color: theme.textMuted),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Privacy Policy',
+                      style: TextStyle(color: theme.textPrimary, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SafeArea(
         bottom: true,
@@ -79,7 +137,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
 
             if (isSearching) ...[
-              // Search Results View
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -143,7 +200,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   ),
                 ),
             ] else ...[
-              // Favorites Grid (Compact size)
               if (favoriteModules.isNotEmpty) ...[
                 SliverToBoxAdapter(
                   child: Padding(
@@ -161,7 +217,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: 1.85, // Slimmer profile
+                      childAspectRatio: 1.85,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -215,7 +271,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
               ],
 
-              // All Categories List
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
@@ -292,8 +347,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
               ),
             ],
-
-            // Bottom safe inset spacing to prevent system navigation bleed-through
             const SliverToBoxAdapter(
               child: SizedBox(height: 32),
             ),

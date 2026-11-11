@@ -1,4 +1,4 @@
-package com.example.omni_calc
+package com.silverpixel.calcplus
 
 import io.flutter.embedding.android.FlutterActivity
 
