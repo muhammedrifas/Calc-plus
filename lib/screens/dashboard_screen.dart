@@ -17,8 +17,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   String _searchQuery = '';
 
   // Update these with your deployed GitHub Pages URLs
-  static const String _privacyPolicyUrl = 'https://muhammedrifas.github.io/OmniCalc-privacy-and-feedback/';
-  static const String _feedbackUrl = 'https://muhammedrifas.github.io/OmniCalc-privacy-and-feedback/feedback.html';
+  static const String _privacyPolicyUrl = 'https://muhammedrifas.github.io/Calc-plus-privacy-and-feedback/';
+  static const String _feedbackUrl = 'https://muhammedrifas.github.io/Calc-plus-privacy-and-feedback/feedback.html';
 
   @override
   void dispose() {
