@@ -11,6 +11,9 @@ import 'package:omni_calc/modules/round_robin/round_robin_module.dart';
 import 'package:omni_calc/modules/bmi_ibw/bmi_ibw_module.dart';
 import 'package:omni_calc/modules/bmr_tdee/bmr_tdee_module.dart';
 
+import 'package:omni_calc/modules/toolkits/catalog.dart';
+import 'package:omni_calc/modules/toolkits/toolkit_module.dart';
+
 class ModuleRegistry {
   static final List<CalculatorModule> allModules = [
     const BasicMathModule(),
@@ -23,6 +26,7 @@ class ModuleRegistry {
     const RoundRobinModule(),
     const BmiIbwModule(),
     const BmrTdeeModule(),
+    ...toolkitModules,
   ];
 
   static Map<CalculatorCategory, List<CalculatorModule>> get groupedByCategory {
@@ -38,7 +42,8 @@ class ModuleRegistry {
     final lowerQuery = query.toLowerCase();
     return allModules.where((m) => 
       m.name.toLowerCase().contains(lowerQuery) || 
-      m.description.toLowerCase().contains(lowerQuery)
+      m.description.toLowerCase().contains(lowerQuery) ||
+      (m is ToolkitModule && m.modes.any((mode) => mode.title.toLowerCase().contains(lowerQuery)))
     ).toList();
   }
 }
